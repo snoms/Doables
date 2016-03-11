@@ -47,8 +47,6 @@ class MasterViewController: UITableViewController {
         //let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         //self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         
-
-        
         let alert = UIAlertController(title: "New Todo list", message: "Please enter your list name here", preferredStyle: .Alert)
         // Add the text field. You can configure it however you need.
         alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in
@@ -60,28 +58,27 @@ class MasterViewController: UITableViewController {
             let textField = alert.textFields![0] as UITextField
             print("Text field: \(textField.text!)")
             // strange bug here, detects duplicates after removal
-            for (index, lists) in TodoManager.sharedInstance.todolists.enumerate() {
-                if lists.getTitle() == textField.text {
-                    // TODO: Insert alert of duplicate. OK to go to DetailView with
-                    print("error: Duplicate list exists")
+//            for (index, lists) in TodoManager.sharedInstance.todolists.enumerate() {
+//                if lists.getTitle() == textField.text {
+//                    print("error: Duplicate list exists")
                     // open DetailView with todolists[index]
                     //self.segueGoal = index
-                    print(index)
+//                    print(index)
                     //print(self.segueGoal)
                     //self.performSegueWithIdentifier("showSpecificDetail", sender: self)
-                }
-                else {
+//                }
+//                else {
                     self.newName = textField.text!
-                }
-            }
+                    print(self.newName)
+                    TodoManager.sharedInstance.newList(self.newName)
+                    print(TodoManager.sharedInstance.todolists.count)
+                    TodoManager.sharedInstance.saveTodos()
+
+//                }
+//            }
             
-            //var newList = ToDoList(name: textField.text!, items: [""])
-            //self.todoListArray.append(newList)
-            
-            
-            let newTodoList = TodoManager.sharedInstance.newList(self.newName)
             //self.objects.insert(newTodoList, atIndex: 0)
-            self.objects.append(newTodoList)
+            //self.objects.append(newTodoList)
             //let indexPath = NSIndexPath(forRow: 0, inSection: 0)
             //self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             self.tableView.reloadData()
@@ -104,7 +101,7 @@ class MasterViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
-                let object = objects[indexPath.row] as! TodoList
+                let object = TodoManager.sharedInstance.todolists[indexPath.row]
                 let nav = segue.destinationViewController as! UINavigationController
                 let svc = nav.topViewController as! DetailViewController
                 svc.passedList = object
@@ -139,13 +136,13 @@ class MasterViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return objects.count
+        return TodoManager.sharedInstance.todolists.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
 
-        let object = objects[indexPath.row] as! TodoList
+        let object = TodoManager.sharedInstance.todolists[indexPath.row]
         cell.textLabel!.text = object.getTitle()
         return cell
     }
@@ -158,7 +155,6 @@ class MasterViewController: UITableViewController {
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             TodoManager.sharedInstance.todolists.removeAtIndex(indexPath.row)
-            objects.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             print(TodoManager.sharedInstance.todolists.count)
         } else if editingStyle == .Insert {

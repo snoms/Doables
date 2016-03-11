@@ -75,6 +75,8 @@ class DetailViewController: UIViewController {
                 TodoManager.sharedInstance.todolists[self.listID].addTodo(textField.text!)
 //                    self.passedList!.addItem(textField.text!)
                     self.tableView.reloadData()
+                TodoManager.sharedInstance.saveTodos()
+
 //                    self.passedList!.save()
 //                }
 //                else {
@@ -95,9 +97,10 @@ class DetailViewController: UIViewController {
 //            if (inputTodo.text?.characters.contains("^") == false) {
 //                self.passedList!.addItem(inputTodo.text!)
 //                print(passedList!.items)
-            TodoManager.sharedInstance.todolists[self.listID].addTodo(inputTodo.text!)
+                TodoManager.sharedInstance.todolists[self.listID].addTodo(inputTodo.text!)
                 inputTodo.text = ""
                 tableView.reloadData()
+                TodoManager.sharedInstance.saveTodos()
                 self.inputTodo.resignFirstResponder()
 //                self.passedList!.save()
 //            }
