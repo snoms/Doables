@@ -92,9 +92,6 @@ class MasterViewController: UITableViewController {
         self.presentViewController(alert, animated: true, completion: nil)
     }
 
-        
-        
-    
 
     // MARK: - Segues
 

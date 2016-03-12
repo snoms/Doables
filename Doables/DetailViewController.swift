@@ -8,22 +8,41 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
 
     var listID: Int!
     
-    @IBOutlet weak var detailDescriptionLabel: UILabel!
+//    @IBOutlet weak var detailDescriptionLabel: UILabel!
+    @IBOutlet weak var listTitle: UINavigationItem!
 
     @IBOutlet weak var tableView: UITableView!
 
     @IBOutlet weak var inputTodo: UITextField!
-    @IBAction func clearList(sender: AnyObject) {
-        TodoManager.sharedInstance.todolists[listID].clearList()
-        self.tableView.reloadData()
-    }
     
-    var passedList: TodoList?
+    @IBAction func clearList(sender: AnyObject) {
+        let deleteAlert = UIAlertController(title: "Warning", message: "Are you sure you want to delete all To-dos? This can not be reverted.", preferredStyle: .Alert)
+        
+        // Grab the value from the text field, and print it when the user clicks OK.
+        let okAction = UIAlertAction(title: "Delete All", style: UIAlertActionStyle.Destructive) {
+            UIAlertAction in
+            NSLog("OK Pressed")
+            TodoManager.sharedInstance.todolists[self.listID].clearList()
+            self.tableView.reloadData()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) {
+            UIAlertAction in
+            NSLog("Cancel Pressed")
+            self.inputTodo.resignFirstResponder()
+        }
+        deleteAlert.addAction(okAction)
+        deleteAlert.addAction(cancelAction)
+        self.presentViewController(deleteAlert, animated: true, completion: nil)
+    }
 
+    var passedList: TodoList?
+    let completedColor = UIColor(red: 0.10, green: 0.9, blue: 0.1, alpha: 0.15)
+    let clearColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
     
     var detailItem: AnyObject? {
         didSet {
@@ -34,11 +53,12 @@ class DetailViewController: UIViewController {
 
     func configureView() {
         // Update the user interface for the detail item.
-        if let detail = self.detailItem {
-            if let label = self.detailDescriptionLabel {
-                label.text = detail.description
-            }
-        }
+//        if let detail = self.detailItem {
+//            if let label = self.detailDescriptionLabel {
+//                label.text = detail.title
+//            }
+//        }
+        listTitle.title = TodoManager.sharedInstance.todolists[listID].getTitle()
     }
 
     override func viewDidLoad() {
@@ -102,7 +122,6 @@ class DetailViewController: UIViewController {
                 tableView.reloadData()
                 TodoManager.sharedInstance.saveTodos()
                 self.inputTodo.resignFirstResponder()
-//                self.passedList!.save()
 //            }
 //            else {
 //                invalidChar()
@@ -110,17 +129,48 @@ class DetailViewController: UIViewController {
         }
     }
     
-    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return TodoManager.sharedInstance.todolists[listID].getTodos().count
-    }
+        if (listID != nil) {
+            //if (listID) {
+                return TodoManager.sharedInstance.todolists[listID].getTodos().count
+            }
+            else {
+                return 0
+            }
+        }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! TodoCell
         cell.todoTextfield.text = TodoManager.sharedInstance.todolists[listID].getTodos()[indexPath.row].getTitle()
         cell.layoutMargins = UIEdgeInsetsZero
+        cell.layer.cornerRadius = 5
+        cell.layer.masksToBounds = true
         print(indexPath.row)
+        if TodoManager.sharedInstance.todolists[listID].getTodos()[indexPath.row].getStatus() {
+            cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+            cell.backgroundColor = completedColor
+            
+
+
+        //    cell.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+        }
         return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        let todo = TodoManager.sharedInstance.todolists[listID].getTodos()[indexPath.row]
+        todo.toggleStatus()
+        if todo.getStatus() {
+            cell?.accessoryType = UITableViewCellAccessoryType.Checkmark
+            cell?.backgroundColor = completedColor
+        }
+        else {
+            cell?.accessoryType = UITableViewCellAccessoryType.None
+            cell?.backgroundColor = clearColor
+        }
+        TodoManager.sharedInstance.saveTodos()
     }
     
     func textFieldShouldReturn(inputTodo: UITextField) -> Bool {
@@ -132,7 +182,7 @@ class DetailViewController: UIViewController {
         if editingStyle == UITableViewCellEditingStyle.Delete {
             TodoManager.sharedInstance.todolists[listID].removeTodo(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-            //TodoManager.sharedInstance.saveTodos()
+            TodoManager.sharedInstance.saveTodos()
         }
     }
 }
