@@ -17,8 +17,6 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
 
     @IBOutlet weak var tableView: UITableView!
 
-    @IBOutlet weak var inputTodo: UITextField!
-    
     @IBAction func clearList(sender: AnyObject) {
         let deleteAlert = UIAlertController(title: "Warning", message: "Are you sure you want to delete all To-dos? This can not be reverted.", preferredStyle: .Alert)
         
@@ -33,7 +31,7 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) {
             UIAlertAction in
             NSLog("Cancel Pressed")
-            self.inputTodo.resignFirstResponder()
+            self.resignFirstResponder()
         }
         deleteAlert.addAction(okAction)
         deleteAlert.addAction(cancelAction)
@@ -69,6 +67,16 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
 //        print(TodoManager.sharedInstance.todolists[listID].getTodos()[0].getStatus())
 //        TodoManager.sharedInstance.todolists[listID].getTodos()[0].toggleStatus()
 //        print(TodoManager.sharedInstance.todolists[listID].getTodos()[0].getStatus())
+        
+        self.title = TodoManager.sharedInstance.todolists[listID].getTitle()
+//        let tlabel = UILabel(frame: CGRectZero)
+//        tlabel.numberOfLines = 0
+//        //tlabel.font = UIFont(name: "HelveticaNeue-Thin", size: 26.0)
+//        tlabel.adjustsFontSizeToFitWidth = true
+//        tlabel.text = self.navigationItem.title
+//        self.navigationItem.titleView = tlabel
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -78,7 +86,7 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
 
 
     @IBAction func addTodo(sender: AnyObject) {
-        if (inputTodo.text == "") {
+        //if (inputTodo.text == "") {
             // Create the alert controller.
             let alert = UIAlertController(title: "You didn't enter anything!", message: "Insert your todo here or press OK to insert an empty row", preferredStyle: .Alert)
             
@@ -91,27 +99,20 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
             alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
                 let textField = alert.textFields![0] as UITextField
                 print("Text field: \(textField.text)")
-//                if (textField.text?.characters.contains("^") == false) {
                 TodoManager.sharedInstance.todolists[self.listID].addTodo(textField.text!)
-//                    self.passedList!.addItem(textField.text!)
-                    self.tableView.reloadData()
+                self.tableView.reloadData()
                 TodoManager.sharedInstance.saveTodos()
-
-//                    self.passedList!.save()
-//                }
-//                else {
-//                    self.invalidChar()
-//                }
             }))
             let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) {
                 UIAlertAction in
                 NSLog("Cancel Pressed")
-                self.inputTodo.resignFirstResponder()
+                self.resignFirstResponder()
             }            // Present the alert.
             alert.addAction(cancelAction)
+        
             self.presentViewController(alert, animated: true, completion: nil)
-        }
-        else {
+        //}
+    /*    else {
             // alert: you have entered an empty todo. do you want to insert a white line?
             // if yes --> continue, if no --> abort
 //            if (inputTodo.text?.characters.contains("^") == false) {
@@ -126,7 +127,7 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
 //            else {
 //                invalidChar()
 //            }
-        }
+        } */
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -142,6 +143,11 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! TodoCell
         cell.todoTextfield.text = TodoManager.sharedInstance.todolists[listID].getTodos()[indexPath.row].getTitle()
+        
+        cell.todoTextfield.numberOfLines = 1;
+        cell.todoTextfield.minimumScaleFactor = 8/UIFont.labelFontSize();
+        cell.todoTextfield.adjustsFontSizeToFitWidth = true;
+        cell.todoTextfield.font = UIFont(name: "HelveticaNeue-Thin", size: 18.0)
         cell.layoutMargins = UIEdgeInsetsZero
         cell.layer.cornerRadius = 5
         cell.layer.masksToBounds = true
@@ -149,10 +155,6 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
         if TodoManager.sharedInstance.todolists[listID].getTodos()[indexPath.row].getStatus() {
             cell.accessoryType = UITableViewCellAccessoryType.Checkmark
             cell.backgroundColor = completedColor
-            
-
-
-        //    cell.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
         }
         return cell
     }
@@ -185,4 +187,18 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
             TodoManager.sharedInstance.saveTodos()
         }
     }
+    
+//    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+//        let delete = UITableViewRowAction(style: .Destructive, title: "Delete") { (action, indexPath) in
+//            // delete item at indexPath
+//        }
+//        
+//        let share = UITableViewRowAction(style: .Normal, title: "Edit") { (action, indexPath) in
+//            // share item at indexPath
+//        }
+//        
+//        share.backgroundColor = self.view.tintColor
+//        
+//        return [delete, share]
+//    }
 }

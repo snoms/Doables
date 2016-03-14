@@ -34,17 +34,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pxo-OK-rmU">
-                                <rect key="frame" x="534" y="549" width="46" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="46" id="oFG-rg-0vo"/>
-                                </constraints>
-                                <state key="normal" title="Add"/>
+                                <rect key="frame" x="514" y="550" width="66" height="30"/>
+                                <state key="normal" title="Add Todo"/>
                                 <connections>
                                     <action selector="addTodo:" destination="JEX-9P-axG" eventType="touchUpInside" id="bMQ-tW-FVJ"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Va7-2G-ZAk">
-                                <rect key="frame" x="20" y="84" width="560" height="448"/>
+                                <rect key="frame" x="20" y="64" width="560" height="448"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
@@ -52,7 +49,7 @@
                                         <rect key="frame" x="0.0" y="28" width="560" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7zC-LA-S6k" id="yLN-7q-epO">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F1q-FK-zh9">
@@ -80,23 +77,15 @@
                                     <outlet property="delegate" destination="JEX-9P-axG" id="5Dm-Da-2qa"/>
                                 </connections>
                             </tableView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tqA-pD-djZ">
-                                <rect key="frame" x="29" y="549" width="497" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="tqA-pD-djZ" firstAttribute="top" secondItem="Va7-2G-ZAk" secondAttribute="bottom" constant="17" id="0XX-Mq-P7e"/>
-                            <constraint firstItem="tqA-pD-djZ" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" constant="9" id="BSK-pl-ZrY"/>
-                            <constraint firstItem="GAO-Cl-Wes" firstAttribute="top" secondItem="tqA-pD-djZ" secondAttribute="bottom" constant="21" id="SKf-B8-NLl"/>
-                            <constraint firstItem="pxo-OK-rmU" firstAttribute="trailing" secondItem="Va7-2G-ZAk" secondAttribute="trailing" id="Xzc-3M-hNr"/>
-                            <constraint firstItem="Va7-2G-ZAk" firstAttribute="trailing" secondItem="svH-Pt-448" secondAttribute="trailingMargin" id="dSy-4A-iux"/>
-                            <constraint firstItem="Va7-2G-ZAk" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" id="geo-1a-I1a"/>
-                            <constraint firstItem="Va7-2G-ZAk" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" constant="20" id="i64-xS-Szw"/>
-                            <constraint firstItem="pxo-OK-rmU" firstAttribute="leading" secondItem="tqA-pD-djZ" secondAttribute="trailing" constant="8" symbolic="YES" id="t84-57-JsR"/>
-                            <constraint firstItem="pxo-OK-rmU" firstAttribute="top" secondItem="tqA-pD-djZ" secondAttribute="top" id="xdS-Rr-1rg"/>
+                            <constraint firstItem="Va7-2G-ZAk" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" id="5So-Pz-p8d"/>
+                            <constraint firstItem="Va7-2G-ZAk" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" id="71w-j2-ED3"/>
+                            <constraint firstAttribute="bottom" secondItem="pxo-OK-rmU" secondAttribute="bottom" constant="20" symbolic="YES" id="72t-0m-Ip8"/>
+                            <constraint firstItem="Va7-2G-ZAk" firstAttribute="trailing" secondItem="pxo-OK-rmU" secondAttribute="trailing" id="LZg-Mf-Sek"/>
+                            <constraint firstItem="Va7-2G-ZAk" firstAttribute="trailing" secondItem="svH-Pt-448" secondAttribute="trailingMargin" id="QIi-OR-FPV"/>
+                            <constraint firstItem="pxo-OK-rmU" firstAttribute="top" secondItem="Va7-2G-ZAk" secondAttribute="bottom" constant="38" id="SQf-Sx-8lI"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -108,7 +97,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="inputTodo" destination="tqA-pD-djZ" id="fOO-Qu-XT9"/>
                         <outlet property="listTitle" destination="mOI-FS-AaM" id="VDD-up-yUt"/>
                         <outlet property="tableView" destination="Va7-2G-ZAk" id="VeI-nz-o1w"/>
                     </connections>
@@ -168,7 +156,7 @@
                             <outlet property="delegate" destination="7bK-jq-Zjz" id="RA6-mI-bju"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="To do lists" id="Zdf-7t-Un8"/>
+                    <navigationItem key="navigationItem" title="Lists" id="Zdf-7t-Un8"/>
                     <connections>
                         <segue destination="vC3-pB-5Vb" kind="showDetail" identifier="showSpecificDetail" id="02X-ve-R3T"/>
                     </connections>

@@ -24,7 +24,7 @@ class TodoManager {
     }
     
     func newList(listname: String) -> TodoList {
-        var list = TodoList(title: listname, todos: [])
+        var list = TodoList(title: listname, todos: [], completed: false)
         TodoManager.sharedInstance.todolists.append(list)
         return list
     }

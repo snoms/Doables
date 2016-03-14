@@ -15,7 +15,9 @@ class MasterViewController: UITableViewController {
     var listID: Int!
     var newName: String!
     var segueGoal: Int!
-
+    let completedColor = UIColor(red: 0.10, green: 0.9, blue: 0.1, alpha: 0.15)
+    let clearColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,6 +25,8 @@ class MasterViewController: UITableViewController {
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
 
+        tableView.reloadData()
+        
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
         self.navigationItem.rightBarButtonItem = addButton
         if let split = self.splitViewController {
@@ -33,6 +37,7 @@ class MasterViewController: UITableViewController {
 
     override func viewWillAppear(animated: Bool) {
         self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
+        tableView.reloadData()
         super.viewWillAppear(animated)
     }
 
@@ -141,6 +146,25 @@ class MasterViewController: UITableViewController {
 
         let object = TodoManager.sharedInstance.todolists[indexPath.row]
         cell.textLabel!.text = object.getTitle()
+        
+        cell.textLabel!.numberOfLines = 1;
+        cell.textLabel!.minimumScaleFactor = 8/UIFont.labelFontSize();
+        cell.textLabel!.adjustsFontSizeToFitWidth = true;
+        cell.textLabel!.font = UIFont(name: "HelveticaNeue-Thin", size: 18.0)
+        cell.layoutMargins = UIEdgeInsetsZero
+        cell.layer.cornerRadius = 5
+        cell.layer.masksToBounds = true
+        print(indexPath.row)
+        
+        if TodoManager.sharedInstance.todolists[indexPath.row].getStatus() {
+            cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+            cell.backgroundColor = completedColor
+        }
+        if !TodoManager.sharedInstance.todolists[indexPath.row].getStatus() {
+            cell.accessoryType = UITableViewCellAccessoryType.None
+            cell.backgroundColor = clearColor
+        }
+        
         return cell
     }
 
