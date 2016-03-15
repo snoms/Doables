@@ -3,6 +3,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -33,23 +35,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pxo-OK-rmU">
-                                <rect key="frame" x="514" y="550" width="66" height="30"/>
-                                <state key="normal" title="Add Todo"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J1a-Gf-z4S">
+                                <rect key="frame" x="20" y="551" width="132" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="132" id="XUg-OI-UJI"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                <state key="normal" title="Remove completed"/>
                                 <connections>
-                                    <action selector="addTodo:" destination="JEX-9P-axG" eventType="touchUpInside" id="bMQ-tW-FVJ"/>
+                                    <action selector="clearList:" destination="JEX-9P-axG" eventType="touchUpInside" id="4WD-ZK-LmK"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LNT-3L-Rn9">
+                                <rect key="frame" x="440" y="551" width="131" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="131" id="dwU-9P-U3N"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                <state key="normal" title="Mark all completed"/>
+                                <connections>
+                                    <action selector="markAllComplete:" destination="JEX-9P-axG" eventType="touchUpInside" id="rjz-Xi-VHR"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Va7-2G-ZAk">
-                                <rect key="frame" x="20" y="64" width="560" height="448"/>
+                                <rect key="frame" x="20" y="63" width="560" height="474"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="7zC-LA-S6k" customClass="TodoCell" customModule="Doables" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="560" height="44"/>
+                                        <rect key="frame" x="0.0" y="92" width="560" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7zC-LA-S6k" id="yLN-7q-epO">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F1q-FK-zh9">
@@ -80,19 +97,24 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Va7-2G-ZAk" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" id="5So-Pz-p8d"/>
-                            <constraint firstItem="Va7-2G-ZAk" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" id="71w-j2-ED3"/>
-                            <constraint firstAttribute="bottom" secondItem="pxo-OK-rmU" secondAttribute="bottom" constant="20" symbolic="YES" id="72t-0m-Ip8"/>
-                            <constraint firstItem="Va7-2G-ZAk" firstAttribute="trailing" secondItem="pxo-OK-rmU" secondAttribute="trailing" id="LZg-Mf-Sek"/>
-                            <constraint firstItem="Va7-2G-ZAk" firstAttribute="trailing" secondItem="svH-Pt-448" secondAttribute="trailingMargin" id="QIi-OR-FPV"/>
-                            <constraint firstItem="pxo-OK-rmU" firstAttribute="top" secondItem="Va7-2G-ZAk" secondAttribute="bottom" constant="38" id="SQf-Sx-8lI"/>
+                            <constraint firstItem="J1a-Gf-z4S" firstAttribute="top" secondItem="LNT-3L-Rn9" secondAttribute="top" id="2EF-7l-cKT"/>
+                            <constraint firstItem="Va7-2G-ZAk" firstAttribute="top" secondItem="svH-Pt-448" secondAttribute="topMargin" constant="63" id="40e-9X-MQ4"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="LNT-3L-Rn9" secondAttribute="trailing" constant="9" id="EoG-Vx-4tk"/>
+                            <constraint firstItem="LNT-3L-Rn9" firstAttribute="baseline" secondItem="J1a-Gf-z4S" secondAttribute="firstBaseline" id="MlF-4R-FkW"/>
+                            <constraint firstItem="Va7-2G-ZAk" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" id="YFN-XS-gzU"/>
+                            <constraint firstItem="J1a-Gf-z4S" firstAttribute="top" secondItem="Va7-2G-ZAk" secondAttribute="bottom" constant="14" id="ZAr-zE-q9d"/>
+                            <constraint firstItem="J1a-Gf-z4S" firstAttribute="leading" secondItem="Va7-2G-ZAk" secondAttribute="leading" id="ZJd-aD-XkO"/>
+                            <constraint firstItem="Va7-2G-ZAk" firstAttribute="trailing" secondItem="svH-Pt-448" secondAttribute="trailingMargin" id="fvm-sO-nzd"/>
+                            <constraint firstItem="J1a-Gf-z4S" firstAttribute="baseline" secondItem="LNT-3L-Rn9" secondAttribute="firstBaseline" id="j5L-jQ-5OI"/>
+                            <constraint firstAttribute="bottom" secondItem="J1a-Gf-z4S" secondAttribute="bottom" constant="20" symbolic="YES" id="tzf-ug-hgh"/>
+                            <constraint firstItem="Va7-2G-ZAk" firstAttribute="centerY" secondItem="svH-Pt-448" secondAttribute="centerY" id="wCX-Ca-KMP"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Detail" id="mOI-FS-AaM">
-                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="Z0l-rW-RVt">
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="Z0l-rW-RVt">
                             <connections>
-                                <action selector="clearList:" destination="JEX-9P-axG" id="CSx-Wf-Dup"/>
+                                <action selector="addTodo:" destination="JEX-9P-axG" id="DqR-Hy-Gj5"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -132,11 +154,11 @@
                                 <rect key="frame" x="0.0" y="86" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WCw-Qf-5nD" id="37f-cq-3Eg">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Arm-wq-HPj">
-                                            <rect key="frame" x="15" y="0.0" width="570" height="43.5"/>
+                                            <rect key="frame" x="15" y="0.0" width="570" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

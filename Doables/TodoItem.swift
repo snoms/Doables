@@ -13,9 +13,6 @@ class TodoItem: NSObject, NSCoding {
     private var title: String
     private var completed = false
     
-//    static let itemTitle = "itemTitle"
-//    static let itemStatus = "itemStatus"
-    
     init?(title: String, completed: Bool) {
         self.title = title
         self.completed = completed
@@ -38,12 +35,20 @@ class TodoItem: NSObject, NSCoding {
         return title
     }
     
+    func editTitle(newtitle: String) {
+        self.title = newtitle
+    }
+    
     func getStatus() -> Bool {
         return completed
     }
     
     func toggleStatus() {
         completed = !completed
+    }
+    
+    func setCompleted() {
+        completed = true
     }
     
 }

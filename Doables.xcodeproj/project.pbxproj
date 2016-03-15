@@ -33,7 +33,6 @@
 		CC4879E81C92FA340001EB25 /* IQToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4879D71C92FA340001EB25 /* IQToolbar.swift */; };
 		CC4879E91C92FA340001EB25 /* IQUIView+IQKeyboardToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4879D81C92FA340001EB25 /* IQUIView+IQKeyboardToolbar.swift */; };
 		CC4879EA1C92FA340001EB25 /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CC4879DA1C92FA340001EB25 /* IQKeyboardManager.bundle */; };
-		CCF556A31C95FD7200642184 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF556A21C95FD7200642184 /* GlobalFunctions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,7 +64,6 @@
 		CC4879D71C92FA340001EB25 /* IQToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IQToolbar.swift; sourceTree = "<group>"; };
 		CC4879D81C92FA340001EB25 /* IQUIView+IQKeyboardToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IQUIView+IQKeyboardToolbar.swift"; sourceTree = "<group>"; };
 		CC4879DA1C92FA340001EB25 /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IQKeyboardManager.bundle; sourceTree = "<group>"; };
-		CCF556A21C95FD7200642184 /* GlobalFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,7 +101,6 @@
 				CC4879BE1C91A9080001EB25 /* TodoList.swift */,
 				CC4879C01C91A90F0001EB25 /* TodoItem.swift */,
 				CC4879C31C91E3150001EB25 /* TodoCell.swift */,
-				CCF556A21C95FD7200642184 /* GlobalFunctions.swift */,
 				CC4879A81C91A8A50001EB25 /* AppDelegate.swift */,
 				CC4879AA1C91A8A50001EB25 /* MasterViewController.swift */,
 				CC4879AC1C91A8A50001EB25 /* DetailViewController.swift */,
@@ -266,7 +263,6 @@
 				CC4879DF1C92FA340001EB25 /* IQUIViewController+Additions.swift in Sources */,
 				CC4879E31C92FA340001EB25 /* IQKeyboardManager.swift in Sources */,
 				CC4879DB1C92FA340001EB25 /* IQNSArray+Sort.swift in Sources */,
-				CCF556A31C95FD7200642184 /* GlobalFunctions.swift in Sources */,
 				CC4879E51C92FA340001EB25 /* IQTextView.swift in Sources */,
 				CC4879E11C92FA340001EB25 /* IQKeyboardManagerConstants.swift in Sources */,
 				CC4879AB1C91A8A50001EB25 /* MasterViewController.swift in Sources */,

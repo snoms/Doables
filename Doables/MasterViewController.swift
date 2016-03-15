@@ -21,7 +21,6 @@ class MasterViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //self.view.backgroundColor = UIColor.
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
 
@@ -47,11 +46,6 @@ class MasterViewController: UITableViewController {
     }
 
     func insertNewObject(sender: AnyObject) {
-        //let newTodoList = TodoManager.sharedInstance.newList("test")
-        //objects.insert(newTodoList, atIndex: 0)
-        //let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        //self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-        
         let alert = UIAlertController(title: "New Todo list", message: "Please enter your list name here", preferredStyle: .Alert)
         // Add the text field. You can configure it however you need.
         alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in
@@ -59,40 +53,31 @@ class MasterViewController: UITableViewController {
         })
         
         // Grab the value from the text field, and print it when the user clicks OK.
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+        let addAction = UIAlertAction(title: "Add", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
             let textField = alert.textFields![0] as UITextField
-            print("Text field: \(textField.text!)")
-            // strange bug here, detects duplicates after removal
-//            for (index, lists) in TodoManager.sharedInstance.todolists.enumerate() {
-//                if lists.getTitle() == textField.text {
-//                    print("error: Duplicate list exists")
-                    // open DetailView with todolists[index]
-                    //self.segueGoal = index
-//                    print(index)
-                    //print(self.segueGoal)
-                    //self.performSegueWithIdentifier("showSpecificDetail", sender: self)
-//                }
-//                else {
-                    self.newName = textField.text!
-                    print(self.newName)
-                    TodoManager.sharedInstance.newList(self.newName)
-                    print(TodoManager.sharedInstance.todolists.count)
-                    TodoManager.sharedInstance.saveTodos()
+            let match = TodoManager.sharedInstance.findMatches(textField.text!)
 
-//                }
-//            }
-            
-            //self.objects.insert(newTodoList, atIndex: 0)
-            //self.objects.append(newTodoList)
-            //let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-            //self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            if match >= 0 {
+                    //open DetailView with todolists[index]
+                    self.segueGoal = match
+                    self.performSegueWithIdentifier("showSpecificDetail", sender: self)
+            }
+            else if match == -1 {
+                    self.newName = textField.text!
+                    TodoManager.sharedInstance.newList(self.newName)
+                    TodoManager.sharedInstance.saveTodos()
+                    self.segueGoal = TodoManager.sharedInstance.todolists.count-1
+                    self.performSegueWithIdentifier("showSpecificDetail", sender: self)
+            }
             self.tableView.reloadData()
-        }))
+        }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) {
             UIAlertAction in
             NSLog("Cancel Pressed")
         }            // Present the alert.
+        alert.addAction(addAction)
         alert.addAction(cancelAction)
         self.presentViewController(alert, animated: true, completion: nil)
     }
@@ -106,7 +91,7 @@ class MasterViewController: UITableViewController {
                 let object = TodoManager.sharedInstance.todolists[indexPath.row]
                 let nav = segue.destinationViewController as! UINavigationController
                 let svc = nav.topViewController as! DetailViewController
-                svc.passedList = object
+//                svc.passedList = object
                 svc.listID = self.tableView.indexPathForSelectedRow?.row
                 
                 let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
@@ -115,19 +100,19 @@ class MasterViewController: UITableViewController {
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
         }
+            
+            
         else if segue.identifier == "showSpecificDetail" {
             //if let indexPath = self.tableView.indexPathForSelectedRow {
-                let object = objects[segueGoal] as! TodoList
+                let object = TodoManager.sharedInstance.todolists[segueGoal]
                 let nav = segue.destinationViewController as! UINavigationController
                 let svc = nav.topViewController as! DetailViewController
-                svc.passedList = object
                 svc.listID = segueGoal
                 
                 let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
                 controller.detailItem = object
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
                 controller.navigationItem.leftItemsSupplementBackButton = true
-            //}
         }
     }
 
@@ -154,7 +139,6 @@ class MasterViewController: UITableViewController {
         cell.layoutMargins = UIEdgeInsetsZero
         cell.layer.cornerRadius = 5
         cell.layer.masksToBounds = true
-        print(indexPath.row)
         
         if TodoManager.sharedInstance.todolists[indexPath.row].getStatus() {
             cell.accessoryType = UITableViewCellAccessoryType.Checkmark
@@ -183,6 +167,6 @@ class MasterViewController: UITableViewController {
         }
     }
 
-
 }
+
 

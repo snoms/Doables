@@ -13,36 +13,26 @@ class TodoList: NSObject, NSCoding {
     private var title: String
     private var todos: Array<TodoItem>
     private var completed: Bool
-//    private var completedCount: Int
-    
-//    static let listTitle = "listTitle"
-//    static let todosArray = "todosArray"
 
     init(title: String, todos: Array<TodoItem>, completed: Bool) {
         self.title = title
         self.todos = todos
-//        self.completedCount = completedCount
         self.completed = completed
         
         super.init()
     }
-    
+
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(title, forKey: "listTitle")
         aCoder.encodeObject(todos, forKey: "todosArray")
-//        aCoder.encodeObject(completedCount as Int, forKey: "completedCount")
         aCoder.encodeBool(completed, forKey: "completedList")
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
         let title = aDecoder.decodeObjectForKey("listTitle") as! String
         let todos = aDecoder.decodeObjectForKey("todosArray") as! Array<TodoItem>
-//        let completedCount = aDecoder.decodeObjectForKey("completedCount") as! Int
         let completed = aDecoder.decodeBoolForKey("completedList")
         self.init(title: title, todos: todos, completed: completed)
-//        if self.completedCount == self.todos.count {
-//            self.completed = true
-//        }
     }
     
     func getTitle() -> String {
@@ -58,24 +48,23 @@ class TodoList: NSObject, NSCoding {
             if !todo.getStatus() {
                 return false
             }
-            else {
-                return true
-            }
         }
-        return false
+        return true
     }
     
-//    func getCompleted() -> Int {
-//        return completedCount
-//    }
-//    
-//    func changeCompleted(value: Int) {
-//        self.completedCount += value
-//    }
-//    
-//    func setStatus(status: Bool) {
-//        self.completed = status
-//    }
+    func completeItems() {
+        for todo in self.todos {
+            todo.setCompleted()
+        }
+    }
+    
+    func removeCompleted() {
+        for (index, todo) in self.todos.enumerate().reverse() {
+            if todo.getStatus() {
+                removeTodo(index)
+            }
+        }
+    }
     
     func addTodo(text: String) {
         let todo = TodoItem(title: text, completed: false)
